@@ -29,9 +29,11 @@ if __name__ == '__main__':
     args = args_parser()
     exp_details(args)
 
-    if args.gpu_id:
-        torch.cuda.set_device(args.gpu_id)
-    device = 'cuda' if args.gpu else 'cpu'
+    # if args.gpu:
+    #     # torch.cuda.set_device(args.gpu)
+    #     device = torch.device() 'cuda' if args.gpu else 'cpu'
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print (device)
 
     # load dataset and user groups
     train_dataset, test_dataset, user_groups = get_dataset(args)
@@ -122,7 +124,7 @@ if __name__ == '__main__':
     print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
 
     # Saving the objects train_loss and train_accuracy:
-    file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
+    file_name = 'save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
         format(args.dataset, args.model, args.epochs, args.frac, args.iid,
                args.local_ep, args.local_bs)
 
